@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Zamowienie</title>
+    <script
+      type="application/javascript"
+      src="/js/validationCommon.js"
+    ></script>
+    <script
+      type="application/javascript"
+      src="/js/validationSczegolyZamowienia.js"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <h1>Zamowienia</h1>
+      <img src="/images/icon.png" width="100" height="100" alt="Icon" />
+    </header>
+    <nav>
+      <ul>
+        <li><a href="/pages/index.html">Strona główna</a></li>
+        <li><a href="/pages/Zamowienie/list.html">Zamowienie</a></li>
+        <li>
+          <a href="/pages/SczegolyZamowienia/list.html" class="active">Szczególy zamowienia</a>
+        </li>
+        <li><a href="/pages/Produkty/list.html">Produkty</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <h2>Nowe zamowienie</h2>
+      <form class="form" novalidate onsubmit="return validateForm();">
+        <label for="cenaZamowienia">Cena zamowienia: <span class="symbol-required">*</span></label>
+        <input
+          type="number"
+          name="cenaZamowienia"
+          id="cenaZamowienia"
+          required
+        />
+        <span id="errorCenaZamowienia" class="error-text"></span>
+
+        <label for="znizkaNaZamowienie">Zniżka: </label>
+        <input
+          type="number"
+          name="znizkaNaZamowienie"
+          id="znizkaNaZamowienie"
+        />
+        <span id="errorZnizkaNaZamowienie" class="error-text"></span>
+
+        <label for="iloscZamowien">Ilość: <span class="symbol-required">*</span></label>
+        <input type="number" name="iloscZamowien" id="iloscZamowien" required />
+        <span id="errorIloscZamowien" class="error-text"></span>
+
+        <label for="komientarzyDoZamowienia">Komientarzy: </label>
+        <input
+          type="text"
+          name="komientarzyDoZamowienia"
+          id="komientarzyDoZamowienia"
+        />
+        <span id="errorKomientarzyDoZamowienia" class="error-text"></span>
+        <div class="form-buttons">
+          <p id="errorsSummary" class="error-text"></p>
+          <input type="submit" value="Dodaj" class="form-button-submit" />
+          <a href="" class="form-button-cancel">Anuluj</a>
+        </div>
+      </form>
+    </main>
+
+    <footer><p>Siarhei Vilchuk s20468</p></footer>
+  </body>
+</html>
