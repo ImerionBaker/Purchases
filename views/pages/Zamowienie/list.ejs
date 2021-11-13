@@ -18,21 +18,7 @@
             <td>Kamil</td>
             <td>Petrow</td>
             <td>Powsinska 45</td>
-            <td>
-              <ul class="list-actions">
-                <li>
-                  <a href="/pages/SczegolyZamowienia/szegolyZamowienia.html" class="list-actions-button-details"
-                    >Szczegóły</a
-                  >
-                </li>
-                <li>
-                  <a href="/pages/Zamowienie/form-edit.html" class="list-actions-button-edit">Edytuj</a>
-                </li>
-                <li>
-                  <a href="" class="list-actions-button-delete ">Usuń</a>
-                </li>
-              </ul>
-            </td>
+            <%- include('../../fragments/buttonsOrder.ejs') %>
           </tr>
 
           <tr>
@@ -40,21 +26,7 @@
             <td>Maks</td>
             <td>Ivanow</td>
             <td>Zlota 11</td>
-            <td>
-              <ul class="list-actions">
-                <li>
-                  <a href="/pages/SczegolyZamowienia/szegolyZamowienia.html" class="list-actions-button-details"
-                    >Szczegóły</a
-                  >
-                </li>
-                <li>
-                  <a href="/pages/Zamowienie/form-edit.html" class="list-actions-button-edit">Edytuj</a>
-                </li>
-                <li>
-                  <a href="" class="list-actions-button-delete ">Usuń</a>
-                </li>
-              </ul>
-            </td>
+            <%- include('../../fragments/buttonsOrder.ejs') %>
           </tr>
 
           <tr>
@@ -62,25 +34,11 @@
             <td>Ola</td>
             <td>Makeewa</td>
             <td>Korolewa 67</td>
-            <td>
-              <ul class="list-actions">
-                <li>
-                  <a href="/pages/SczegolyZamowienia/szegolyZamowienia.html" class="list-actions-button-details"
-                    >Szczegóły</a
-                  >
-                </li>
-                <li>
-                  <a href="/pages/Zamowienie/form-edit.html" class="list-actions-button-edit">Edytuj</a>
-                </li>
-                <li>
-                  <a href="" class="list-actions-button-delete">Usuń</a>
-                </li>
-              </ul>
-            </td>
+            <%- include('../../fragments/buttonsOrder.ejs') %>
           </tr>
         </tbody>
       </table>
-      <p><a href="/pages/Zamowienie/form.html" class="button-add">Dodaj nowe zamowienie</a></p>
+      <p><a href="/order/add" class="button-add">Dodaj nowe zamowienie</a></p>
     </main>
 
     <%- include('../../fragments/footer.ejs') %>

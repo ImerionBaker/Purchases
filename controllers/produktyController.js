@@ -8,6 +8,10 @@ exports.showAddProductsList = (req, res, next) =>{
     res.render('pages/Produkty/form', {navLocation: 'products'});
 }
 
+exports.editProduct = (req, res, next) =>{
+    res.render('pages/Produkty/form-edit', {navLocation: 'products'});
+}
+
 exports.showProductsDetails = (req, res, next) =>{
     res.render('pages/SczegolyZamowienia/szegolyZamowienia', {navLocation: 'products'});
 }
