@@ -39,34 +39,60 @@
         <label for="dataZamowienia"
           >Data zamowienia: <span class="symbol-required">*</span></label
         >
-        <input type="date" name="dataZamowienia" id="dataZamowienia" required />
-        <span id="errorDataZamowienia" class="error-text"></span>
+        <input
+          type="date"
+          name="dataZamowienia"
+          id="dataZamowienia"
+          class="error-input"
+          required
+        />
+        <span id="errorDataZamowienia" class="error-text">
+          Pole jest wymagane
+        </span>
 
         <label for="firstName"
           >Imie: <span class="symbol-required">*</span></label
         >
-        <input type="text" name="firstName" id="firstName" required />
-        <span id="errorFirstName" class="error-text"></span>
+        <input
+          type="text"
+          name="firstName"
+          id="firstName"
+          class="error-input"
+          required
+        />
+        <span id="errorFirstName" class="error-text"> Pole jest wymagane </span>
 
         <label for="lastName"
           >Nazwisko: <span class="symbol-required">*</span></label
         >
-        <input type="text" name="lastName" id="lastName" required />
-        <span id="errorLastName" class="error-text"></span>
+        <input
+          type="text"
+          name="lastName"
+          id="lastName"
+          class="error-input"
+          required
+        />
+        <span id="errorLastName" class="error-text"> Pole jest wymagane </span>
 
         <label for="deliveryAdres"
           >Adres dostawy: <span class="symbol-required">*</span></label
         >
-        <input type="text" name="deliveryAdres" id="deliveryAdres" required />
-        <span id="errorDeliveryAdres" class="error-text"></span>
+        <input
+          type="text"
+          name="deliveryAdres"
+          id="deliveryAdres"
+          required
+          class="error-input"
+        />
+        <span id="errorDeliveryAdres" class="error-text">
+          Pole jest wymagane
+        </span>
         <div class="form-buttons">
-          <p id="errorsSummary" class="error-text"></p>
+          <p id="errorsSummary" class="error-text">Formularz zawiera błędy</p>
           <input type="submit" value="Dodaj" class="form-button-submit" />
           <a href="" class="form-button-cancel">Anuluj</a>
         </div>
       </form>
     </main>
 
-    <footer><p>Siarhei Vilchuk s20468</p></footer>
-  </body>
-</html>
+    <%- include('../../fragments/footer.ejs') %>

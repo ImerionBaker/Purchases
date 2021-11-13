@@ -39,7 +39,6 @@
           type="number"
           name="cenaZamowienia"
           id="cenaZamowienia"
-          value="5700"
           required
         />
         <span id="errorCenaZamowienia" class="error-text"></span>
@@ -49,18 +48,11 @@
           type="number"
           name="znizkaNaZamowienie"
           id="znizkaNaZamowienie"
-          value="10.0"
         />
         <span id="errorZnizkaNaZamowienie" class="error-text"></span>
 
         <label for="iloscZamowien">Ilość: <span class="symbol-required">*</span></label>
-        <input
-          type="number"
-          name="iloscZamowien"
-          id="iloscZamowien"
-          value="3"
-          required
-        />
+        <input type="number" name="iloscZamowien" id="iloscZamowien" required />
         <span id="errorIloscZamowien" class="error-text"></span>
 
         <label for="komientarzyDoZamowienia">Komientarzy: </label>
@@ -68,7 +60,6 @@
           type="text"
           name="komientarzyDoZamowienia"
           id="komientarzyDoZamowienia"
-          value="Сoment smth"
         />
         <span id="errorKomientarzyDoZamowienia" class="error-text"></span>
         <div class="form-buttons">
@@ -79,6 +70,4 @@
       </form>
     </main>
 
-    <footer><p>Siarhei Vilchuk s20468</p></footer>
-  </body>
-</html>
+    <%- include('../../fragments/footer.ejs') %>

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" />
-    <title>Zamowienia</title>
+    <title>Zamowienie</title>
     <script
       type="application/javascript"
       src="/js/validationCommon.js"
@@ -34,55 +34,31 @@
     </nav>
 
     <main>
-      <h2>Edycja zamowienia</h2>
+      <h2>Nowe zamowienie</h2>
       <form class="form" novalidate onsubmit="return validateForm();">
         <label for="dataZamowienia"
           >Data zamowienia: <span class="symbol-required">*</span></label
         >
-        <input
-          type="date"
-          name="dataZamowienia"
-          id="dataZamowienia"
-          value="2000-01-01"
-          required
-        />
-        <span id="errorDataZamowienia" class="error-text"> </span>
+        <input type="date" name="dataZamowienia" id="dataZamowienia" required />
+        <span id="errorDataZamowienia" class="error-text"></span>
 
         <label for="firstName"
           >Imie: <span class="symbol-required">*</span></label
         >
-        <input
-          type="text"
-          name="firstName"
-          id="firstName"
-          value="Jan"
-          required
-        />
-        <span id="errorFirstName" class="error-text"> </span>
+        <input type="text" name="firstName" id="firstName" required />
+        <span id="errorFirstName" class="error-text"></span>
 
         <label for="lastName"
           >Nazwisko: <span class="symbol-required">*</span></label
         >
-        <input
-          type="text"
-          name="lastName"
-          id="lastName"
-          value="Kowalski"
-          required
-        />
-        <span id="errorLastName" class="error-text"> </span>
+        <input type="text" name="lastName" id="lastName" required />
+        <span id="errorLastName" class="error-text"></span>
 
         <label for="deliveryAdres"
           >Adres dostawy: <span class="symbol-required">*</span></label
         >
-        <input
-          type="text"
-          name="deliveryAdres"
-          id="deliveryAdres"
-          value="Koszykowa 13"
-          required
-        />
-        <span id="errorDeliveryAdres" class="error-text"> </span>
+        <input type="text" name="deliveryAdres" id="deliveryAdres" required />
+        <span id="errorDeliveryAdres" class="error-text"></span>
         <div class="form-buttons">
           <p id="errorsSummary" class="error-text"></p>
           <input type="submit" value="Dodaj" class="form-button-submit" />
@@ -91,6 +67,4 @@
       </form>
     </main>
 
-    <footer><p>Siarhei Vilchuk s20468</p></footer>
-  </body>
-</html>
+    <%- include('../../fragments/footer.ejs') %>

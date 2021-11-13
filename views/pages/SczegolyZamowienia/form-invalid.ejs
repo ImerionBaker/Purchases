@@ -39,9 +39,10 @@
           type="number"
           name="cenaZamowienia"
           id="cenaZamowienia"
+          class="error-input"
           required
         />
-        <span id="errorCenaZamowienia" class="error-text"></span>
+        <span id="errorCenaZamowienia" class="error-text">Pole jest wymagane</span>
 
         <label for="znizkaNaZamowienie">Zniżka: </label>
         <input
@@ -49,11 +50,11 @@
           name="znizkaNaZamowienie"
           id="znizkaNaZamowienie"
         />
-        <span id="errorZnizkaNaZamowienie" class="error-text"></span>
+        <span id="errorZnizkaNaZamowienia" class="error-text"></span>
 
         <label for="iloscZamowien">Ilość: <span class="symbol-required">*</span></label>
-        <input type="number" name="iloscZamowien" id="iloscZamowien" required />
-        <span id="errorIloscZamowien" class="error-text"></span>
+        <input type="number" name="iloscZamowien" id="iloscZamowien" class="error-input" required />
+        <span id="errorIloscZamowien" class="error-text">Pole jest wymagane</span>
 
         <label for="komientarzyDoZamowienia">Komientarzy: </label>
         <input
@@ -61,15 +62,13 @@
           name="komientarzyDoZamowienia"
           id="komientarzyDoZamowienia"
         />
-        <span id="errorKomientarzyDoZamowienia" class="error-text"></span>
+        <span id="errorKomientarzDoZamowiena" class="error-text"></span>
         <div class="form-buttons">
-          <p id="errorsSummary" class="error-text"></p>
+          <p id="errorsSummary" class="error-text">Formularz zawiera bledy</p>
           <input type="submit" value="Dodaj" class="form-button-submit" />
           <a href="" class="form-button-cancel">Anuluj</a>
         </div>
       </form>
     </main>
 
-    <footer><p>Siarhei Vilchuk s20468</p></footer>
-  </body>
-</html>
+    <%- include('../../fragments/footer.ejs') %>
