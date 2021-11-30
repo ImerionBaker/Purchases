@@ -1,51 +1,52 @@
 <%- include('../../fragments/header.ejs') %>
 
-    <main>
-      <h2>Lista produktów</h2>
-      <table class="table-list">
-        <thead>
-          <tr>
-            <th>Nazwa</th>
-            <th>Opis</th>
-            <th>Kod towaru</th>
-            <th>Akcje</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IPhone 13 Pro Max</td>
-            <td>
-              Smartfon APPLE iPhone 13 Pro Max 512GB 5G 6.7'' 120Hz Grafitowy
-              MLL63PM/A
-            </td>
-            <td>56387874</td>
-            <%- include('../../fragments/buttonsProduct.ejs') %>
-          </tr>
+<main>
+  <h2>Lista produktów</h2>
+  <table class="table-list">
+    <thead>
+      <tr>
+        <th>Nazwa</th>
+        <th>Opis</th>
+        <th>Kod towaru</th>
+        <th>Akcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let products of prods) { %>
+      <tr>
+        <td><%= products.productName %></td>
+        <td><%= products.description %></td>
+        <td><%= products.productCode %></td>
+        <td>
+          <ul class="list-actions">
+            <li>
+              <a
+                href="/products/details/<%=products._id%>"
+                class="list-actions-button-details"
+                >Szczegóły</a
+              >
+            </li>
+            <li>
+              <a
+                href="/products/edit/<%=products._id%>"
+                class="list-actions-button-edit"
+                >Edytuj</a
+              >
+            </li>
+            <li>
+              <a
+                href="/products/delete/<%=products._id%>"
+                class="list-actions-button-delete"
+                >Usuń</a
+              >
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <p><a href="/products/add" class="button-add">Dodaj nowy produkt</a></p>
+</main>
 
-          <tr>
-            <td>Macbook Air M1</td>
-            <td>
-              Laptop APPLE Macbook Air 13.3" Retina M1 8GB SSD 256GB macOS
-              Gwiezdna szarość
-            </td>
-            <td>568939943</td>
-            <%- include('../../fragments/buttonsProduct.ejs') %>
-          </tr>
-
-          <tr>
-            <td>iPad Air</td>
-            <td>
-              Tablet APPLE iPad Air 10.9" 4 gen. 256 GB LTE Wi-Fi Błękitny
-            </td>
-            <td>5638383822</td>
-            <%- include('../../fragments/buttonsProduct.ejs') %>
-          </tr>
-        </tbody>
-      </table>
-      <p><a href="/products/add" class="button-add">Dodaj nowy produkt</a></p>
-    </main>
-
-    <%- include('../../fragments/footer.ejs') %>
-
-
-    
+<%- include('../../fragments/footer.ejs') %>

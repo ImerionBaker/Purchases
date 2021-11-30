@@ -1,33 +1,123 @@
 <%- include('../../fragments/header.ejs') %>
-    <script
-      type="application/javascript"
-      src="/js/validationCommon.js"
-    ></script>
-    <script
-      type="application/javascript"
-      src="/js/validationProduktyForm.js"
-    ></script>
-    <main>
-      <h2>Nowy produkt</h2>
-      <form class="form" novalidate onsubmit="return validateForm();">
-        <label for="nazwaProduktu">Nazwa produktu: <span class="symbol-required">*</span></label>
-        <input type="text" name="nazwaProduktu" id="nazwaProduktu" required />
-        <span id="errorNazwaProduktu" class="error-text"></span>
+<!-- <script type="application/javascript" src="/js/validationCommon.js"></script>
+<script
+  type="application/javascript"
+  src="/js/validationProduktyForm.js"
+></script> -->
 
-        <label for="opisProduktu">Opis: </label>
-        <input type="text" name="opisProduktu" id="opisProduktu" />
-        <span id="errorOpisProduktu" class="error-text"></span>
+<main>
+  <script
+    type="application/javascript"
+    src="/js/validationProduktyForm.js"
+  ></script>
+  <script type="application/javascript" src="/js/validationCommon.js"></script>
+  <h2><%= pageTitle %></h2>
+  <form
+    class="form"
+    method="post"
+    action="<%=formAction%>"
+    novalidate
+    onsubmit="return validateForm();"
+  >
+    <input type="hidden" name="_id" value="<%= products._id %>" />
 
-        <label for="kodProduktu">Kod towaru: <span class="symbol-required">*</span></label>
-        <input type="number" name="kodProduktu" id="kodProduktu" required />
-        <span id="errorKodProduktu"class="error-text"> </span>
+    <label for="productName"
+      >Nazwa: <span class="symbol-required">*</span></label
+    >
+    <input type="text" name="productName" id="productName" placeholder="2-60
+    znaków" value="<%= products.productName %>" <%= (formMode == 'showDetails')
+    ? 'disabled' : '' %>/>
+    <span id="errorNazwaProduktu" class="error-text"></span>
 
-        <div class="form-buttons">
-          <p id="errorsSummary" class="error-text"></p>
-          <input type="submit" value="Dodaj" class="form-button-submit" />
-          <a href="" class="form-button-cancel">Anuluj</a>
-        </div>
-      </form>
-    </main>
+    <label for="description">Opis: </label>
+    <input type="text" name="description" id="description" placeholder="2-200
+    znaków" value="<%= products.description %>" <%= (formMode == 'showDetails')
+    ? 'disabled' : '' %> />
+    <span id="errorOpisProduktu" class="error-text"></span>
 
-    <%- include('../../fragments/footer.ejs') %>
+    <label for="productCode"
+      >Kod towaru: <span class="symbol-required">*</span></label
+    >
+    <input type="text" name="productCode" id="productCode" placeholder="2-10
+    znaków" value="<%= products.productCode %>" <%= (formMode == 'showDetails')
+    ? 'disabled' : '' %> />
+    <span id="errorKodProduktu" class="error-text"> </span>
+
+    <% if(formMode == 'showDetails') { %>
+    <div class="form-buttons">
+      <a
+        href="/products/edit/<%= products._id %>"
+        class="list-actions-button-edit"
+        >Edytuj</a
+      >
+    </div>
+
+    <% } %>
+    <div class="form-buttons">
+      <p id="errorsSummary" class="error-text"></p>
+      <% if (formMode != 'showDetails') {%>
+      <!-- <input class="form-button-submit" type="submit" value="<%=btnLabel%>" /> -->
+      <input type="submit" value="<%=btnLabel%>" class="form-button-submit" />
+      <% } %>
+    </div>
+  </form>
+
+  <% if(formMode == 'showDetails' || formMode == 'edit') { %>
+  <h2>Szczegóły zamowienia</h2>
+  <table class="table-list">
+    <thead>
+      <tr>
+        <th>Cena</th>
+        <th>Zhika</th>
+        <th>Ilość</th>
+        <th>Komientarzy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(let p of products.orderdetails) { %>
+      <tr>
+        <td><%=p.cost%></td>
+        <td><%= p.discount%></td>
+        <td><%= p.amount%></td>
+        <td><%= p.comments%></td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <br />
+  <div class="form-buttons">
+    <% if (formMode != 'showDetails') { %>
+    <!-- <input class="form-button-submit" type="submit" value="<%=btnLabel%>" /> -->
+    <a class="form-button-cancel" href="/products">Anuluj</a>
+    <% } else { %>
+    <a class="form-button-cancel" href="/products">Powrót</a>
+    <% } %>
+  </div>
+  <% } %>
+
+  <!-- <form class="form" novalidate onsubmit="return validateForm();">
+    <label for="nazwaProduktu"
+      >Nazwa produktu: <span class="symbol-required">*</span></label
+    >
+    <input type="text" name="nazwaProduktu" id="nazwaProduktu" required />
+    <span id="errorNazwaProduktu" class="error-text"></span>
+
+    <label for="opisProduktu">Opis: </label>
+    <input type="text" name="opisProduktu" id="opisProduktu" />
+    <span id="errorOpisProduktu" class="error-text"></span>
+
+    <label for="kodProduktu"
+      >Kod towaru: <span class="symbol-required">*</span></label
+    >
+    <input type="number" name="kodProduktu" id="kodProduktu" required />
+    <span id="errorKodProduktu" class="error-text"> </span>
+
+    <div class="form-buttons">
+      <p id="errorsSummary" class="error-text"></p>
+      <input type="submit" value="Dodaj" class="form-button-submit" />
+      <a href="" class="form-button-cancel">Anuluj</a>
+    </div>
+  </form> -->
+</main>
+
+<%- include('../../fragments/footer.ejs') %>
