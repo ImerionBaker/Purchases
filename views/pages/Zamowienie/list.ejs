@@ -1,44 +1,54 @@
 <%- include('../../fragments/header.ejs') %>
 
-    <main>
-      <h2>Lista zamówień</h2>
-      <table class="table-list">
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Imie klienta</th>
-            <th>Nazwisko klienta</th>
-            <th>Adres dostawy</th>
-            <th>Akcje</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>05.04.2021</td>
-            <td>Kamil</td>
-            <td>Petrow</td>
-            <td>Powsinska 45</td>
-            <%- include('../../fragments/buttonsOrder.ejs') %>
-          </tr>
+<main>
+  <h2>Lista zamowień</h2>
+  <table class="table-list">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Imie klienta</th>
+        <th>Nazwisko klienta</th>
+        <th>Adres dostawy</th>
+        <th>Akcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let order of orders) { %>
+      <tr>
+        <td><%=order.orderDate.toISOString().split('T') [0] %></td>
+        <td><%= order.customerFirstName %></td>
+        <td><%= order.customerLastName %></td>
+        <td><%= order.deliveryAddress %></td>
+        <td>
+          <ul class="list-actions">
+            <li>
+              <a
+                href="/order/details/<%=order._id%>"
+                class="list-actions-button-details"
+                >Szczegóły</a
+              >
+            </li>
+            <li>
+              <a
+                href="/order/edit/<%=order._id%>"
+                class="list-actions-button-edit"
+                >Edytuj</a
+              >
+            </li>
+            <li>
+              <a
+                href="/order/delete/<%=order._id%>"
+                class="list-actions-button-delete"
+                >Usuń</a
+              >
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <p><a href="/order/add" class="button-add">Dodaj nowe zamowienie</a></p>
+</main>
 
-          <tr>
-            <td>10.07.2021</td>
-            <td>Maks</td>
-            <td>Ivanow</td>
-            <td>Zlota 11</td>
-            <%- include('../../fragments/buttonsOrder.ejs') %>
-          </tr>
-
-          <tr>
-            <td>27.09.2021</td>
-            <td>Ola</td>
-            <td>Makeewa</td>
-            <td>Korolewa 67</td>
-            <%- include('../../fragments/buttonsOrder.ejs') %>
-          </tr>
-        </tbody>
-      </table>
-      <p><a href="/order/add" class="button-add">Dodaj nowe zamowienie</a></p>
-    </main>
-
-    <%- include('../../fragments/footer.ejs') %>
+<%- include('../../fragments/footer.ejs') %>

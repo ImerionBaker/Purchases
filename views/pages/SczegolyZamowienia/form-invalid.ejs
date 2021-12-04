@@ -1,50 +1,41 @@
 <%- include('../../fragments/header.ejs') %>
-    <script
-      type="application/javascript"
-      src="/js/validationCommon.js"
-    ></script>
-    <script
-      type="application/javascript"
-      src="/js/validationSczegolyZamowienia.js"
-    ></script>
-    <main>
-      <h2>Nowe zamowienie</h2>
-      <form class="form" novalidate onsubmit="return validateForm();">
-        <label for="cenaZamowienia">Cena zamowienia: <span class="symbol-required">*</span></label>
-        <input
-          type="number"
-          name="cenaZamowienia"
-          id="cenaZamowienia"
-          class="error-input"
-          required
-        />
-        <span id="errorCenaZamowienia" class="error-text">Pole jest wymagane</span>
+<script type="application/javascript" src="/js/validationCommon.js"></script>
+<script
+  type="application/javascript"
+  src="/js/validationSczegolyZamowienia.js"
+></script>
+<main>
+  <h2>Nowe zamowienie</h2>
+  <form class="form" novalidate onsubmit="return validateForm();">
+    <label for="cost"
+      >Cena zamowienia: <span class="symbol-required">*</span></label
+    >
+    <input type="number" name="cost" id="cost" class="error-input" required />
+    <span id="errorCenaZamowienia" class="error-text">Pole jest wymagane</span>
 
-        <label for="znizkaNaZamowienie">Zniżka: </label>
-        <input
-          type="number"
-          name="znizkaNaZamowienie"
-          id="znizkaNaZamowienie"
-        />
-        <span id="errorZnizkaNaZamowienia" class="error-text"></span>
+    <label for="discount">Zniżka: </label>
+    <input type="number" name="discount" id="discount" />
+    <span id="errorZnizkaNaZamowienia" class="error-text"></span>
 
-        <label for="iloscZamowien">Ilość: <span class="symbol-required">*</span></label>
-        <input type="number" name="iloscZamowien" id="iloscZamowien" class="error-input" required />
-        <span id="errorIloscZamowien" class="error-text">Pole jest wymagane</span>
+    <label for="amount">Ilość: <span class="symbol-required">*</span></label>
+    <input
+      type="number"
+      name="amount"
+      id="amount"
+      class="error-input"
+      required
+    />
+    <span id="errorIloscZamowien" class="error-text">Pole jest wymagane</span>
 
-        <label for="komientarzyDoZamowienia">Komientarzy: </label>
-        <input
-          type="text"
-          name="komientarzyDoZamowienia"
-          id="komientarzyDoZamowienia"
-        />
-        <span id="errorKomientarzDoZamowiena" class="error-text"></span>
-        <div class="form-buttons">
-          <p id="errorsSummary" class="error-text">Formularz zawiera bledy</p>
-          <input type="submit" value="Dodaj" class="form-button-submit" />
-          <a href="" class="form-button-cancel">Anuluj</a>
-        </div>
-      </form>
-    </main>
+    <label for="comments">Komientarzy: </label>
+    <input type="text" name="comments" id="comments" />
+    <span id="errorKomientarzDoZamowiena" class="error-text"></span>
+    <div class="form-buttons">
+      <p id="errorsSummary" class="error-text">Formularz zawiera bledy</p>
+      <input type="submit" value="Dodaj" class="form-button-submit" />
+      <a href="" class="form-button-cancel">Anuluj</a>
+    </div>
+  </form>
+</main>
 
-    <%- include('../../fragments/footer.ejs') %>
+<%- include('../../fragments/footer.ejs') %>

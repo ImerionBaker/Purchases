@@ -1,45 +1,118 @@
 <%- include('../../fragments/header.ejs') %>
-    <script
-    type="application/javascript"
-    src="/js/validationCommon.js"
-  ></script>
+<main>
+  <script type="application/javascript" src="/js/validationCommon.js"></script>
   <script
     type="application/javascript"
     src="/js/validationZamowienieForm.js"
   ></script>
+  <h2><%= pageTitle %></h2>
+  <form
+    class="form"
+    method="post"
+    action="<%=formAction%>"
+    novalidate
+    onsubmit="return validateForm();"
+  >
+    <input type="hidden" name="_id" value="<%= orders._id %>" />
 
-    <main>
-      <h2>Nowe zamowienie</h2>
-      <form class="form" novalidate onsubmit="return validateForm();">
-        <label for="dataZamowienia"
-          >Data zamowienia: <span class="symbol-required">*</span></label
-        >
-        <input type="date" name="dataZamowienia" id="dataZamowienia" required />
-        <span id="errorDataZamowienia" class="error-text"></span>
+    <label for="orderDate">Data: <span class="symbol-required">*</span></label>
+    <input type="text" name="orderDate" id="orderDate" placeholder="2-60 znaków"
+    value="<%=orders.orderDate%>" <%= (formMode == 'showDetails') ? 'disabled' :
+    '' %>/>
+    <span id="errorDataZamowienia" class="error-text"></span>
 
-        <label for="firstName"
-          >Imie: <span class="symbol-required">*</span></label
-        >
-        <input type="text" name="firstName" id="firstName" required />
-        <span id="errorFirstName" class="error-text"></span>
+    <label for="customerFirstName"
+      >Imie: <span class="symbol-required">*</span></label
+    >
+    <input type="text" name="customerFirstName" id="customerFirstName"
+    placeholder="2-200 znaków" value="<%= orders.customerFirstName %>" <%=
+    (formMode == 'showDetails') ? 'disabled' : '' %> />
+    <span id="errorFirstName" class="error-text"></span>
 
-        <label for="lastName"
-          >Nazwisko: <span class="symbol-required">*</span></label
-        >
-        <input type="text" name="lastName" id="lastName" required />
-        <span id="errorLastName" class="error-text"></span>
+    <label for="customerLastName"
+      >Nazwisko: <span class="symbol-required">*</span></label
+    >
+    <input type="text" name="customerLastName" id="customerLastName"
+    placeholder="2-200 znaków" value="<%= orders.customerLastName %>" <%=
+    (formMode == 'showDetails') ? 'disabled' : '' %> />
+    <span id="errorLastName" class="error-text"></span>
 
-        <label for="deliveryAdres"
-          >Adres dostawy: <span class="symbol-required">*</span></label
-        >
-        <input type="text" name="deliveryAdres" id="deliveryAdres" required />
-        <span id="errorDeliveryAdres" class="error-text"></span>
-        <div class="form-buttons">
-          <p id="errorsSummary" class="error-text"></p>
-          <input type="submit" value="Dodaj" class="form-button-submit" />
-          <a href="" class="form-button-cancel">Anuluj</a>
-        </div>
-      </form>
-    </main>
+    <label for="deliveryAddress"
+      >Adres dostawy: <span class="symbol-required">*</span></label
+    >
+    <input type="deliveryAddress" name="deliveryAddress" id="deliveryAddress"
+    placeholder="2-200 znaków" value="<%= orders.deliveryAddress %>" <%=
+    (formMode == 'showDetails') ? 'disabled' : '' %> />
+    <span id="errorDeliveryAdres" class="error-text"></span>
 
-    <%- include('../../fragments/footer.ejs') %>
+    <% if(formMode == 'showDetails') { %>
+    <div class="form-buttons">
+      <a href="/order/edit/<%= orders._id %>" class="list-actions-button-edit"
+        >Edytuj</a
+      >
+    </div>
+    <% } %>
+    <div class="form-buttons">
+      <p id="errorsSummary" class="error-text"></p>
+      <% if (formMode != 'showDetails') {%>
+      <input type="submit" value="<%=btnLabel%>" class="form-button-submit" />
+      <a class="form-button-cancel" href="/order">Anuluj</a>
+      <% } else { %>
+      <a class="form-button-cancel" href="/order">Powrót</a>
+      <% } %>
+    </div>
+  </form>
+
+  <% if(formMode == 'showDetails' || formMode == 'edit') { %>
+  <h2>Szczegóły zamowienia</h2>
+  <table class="table-list">
+    <thead>
+      <tr>
+        <th>Cena</th>
+        <th>Zhika</th>
+        <th>Ilość</th>
+        <th>Komientarzy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(let p of orders.orderdetails) { %>
+      <tr>
+        <td><%=p.cost%></td>
+        <td><%= p.discount%></td>
+        <td><%= p.amount%></td>
+        <td><%= p.comments%></td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <% } %>
+
+  <!-- <label for="dataZamowienia"
+      >Data zamowienia: <span class="symbol-required">*</span></label
+    >
+    <input type="date" name="dataZamowienia" id="dataZamowienia" required />
+    <span id="errorDataZamowienia" class="error-text"></span>
+
+    <label for="firstName">Imie: <span class="symbol-required">*</span></label>
+    <input type="text" name="firstName" id="firstName" required />
+    <span id="errorFirstName" class="error-text"></span>
+
+    <label for="lastName"
+      >Nazwisko: <span class="symbol-required">*</span></label
+    >
+    <input type="text" name="lastName" id="lastName" required />
+    <span id="errorLastName" class="error-text"></span>
+
+    <label for="deliveryAdres"
+      >Adres dostawy: <span class="symbol-required">*</span></label
+    >
+    <input type="text" name="deliveryAdres" id="deliveryAdres" required />
+    <span id="errorDeliveryAdres" class="error-text"></span>
+    <div class="form-buttons"> -->
+  <!-- <p id="errorsSummary" class="error-text"></p>
+      <input type="submit" value="Dodaj" class="form-button-submit" />
+      <a href="" class="form-button-cancel">Anuluj</a>
+    </div> -->
+</main>
+
+<%- include('../../fragments/footer.ejs') %>

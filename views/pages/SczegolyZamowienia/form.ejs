@@ -1,51 +1,93 @@
 <%- include('../../fragments/header.ejs') %>
-
-    <script
-    type="application/javascript"
-    src="/js/validationCommon.js"
-  ></script>
+<main>
   <script
     type="application/javascript"
     src="/js/validationSczegolyZamowienia.js"
   ></script>
+  <script type="application/javascript" src="/js/validationCommon.js"></script>
+  <h2><%= pageTitle %></h2>
 
-    <main>
-      <h2>Nowe zamowienie</h2>
-      <form class="form" novalidate onsubmit="return validateForm();">
-        <label for="cenaZamowienia">Cena zamowienia: <span class="symbol-required">*</span></label>
-        <input
-          type="number"
-          name="cenaZamowienia"
-          id="cenaZamowienia"
-          required
-        />
-        <span id="errorCenaZamowienia" class="error-text"></span>
+  <form
+    class="form"
+    method="post"
+    action="<%=formAction%>"
+    novalidate
+    onsubmit="return validateForm();"
+  >
+    <input type="hidden" name="_id" value="<%= orderDetails._id %>" />
 
-        <label for="znizkaNaZamowienie">Zniżka: </label>
-        <input
-          type="number"
-          name="znizkaNaZamowienie"
-          id="znizkaNaZamowienie"
-        />
-        <span id="errorZnizkaNaZamowienie" class="error-text"></span>
+    <label for="cost">Cena: <span class="symbol-required">*</span></label>
+    <input type="text" name="cost" id="cost" placeholder="2-60 znaków"
+    value="<%= orderDetails.cost%>" <%= (formMode == 'showDetails') ? 'disabled'
+    : '' %>/>
+    <span id="errorCenaZamowienia" class="error-text"></span>
 
-        <label for="iloscZamowien">Ilość: <span class="symbol-required">*</span></label>
-        <input type="number" name="iloscZamowien" id="iloscZamowien" required />
-        <span id="errorIloscZamowien" class="error-text"></span>
+    <label for="discount">Zniżka: </label>
+    <input type="text" name="discount" id="discount" placeholder="2-60 znaków"
+    value="<%= orderDetails.discount%>" <%= (formMode == 'showDetails') ?
+    'disabled' : '' %>/>
+    <span id="errorZnizkaNaZamowienie" class="error-text"></span>
 
-        <label for="komientarzyDoZamowienia">Komientarzy: </label>
-        <input
-          type="text"
-          name="komientarzyDoZamowienia"
-          id="komientarzyDoZamowienia"
-        />
-        <span id="errorKomientarzyDoZamowienia" class="error-text"></span>
-        <div class="form-buttons">
-          <p id="errorsSummary" class="error-text"></p>
-          <input type="submit" value="Dodaj" class="form-button-submit" />
-          <a href="" class="form-button-cancel">Anuluj</a>
-        </div>
-      </form>
-    </main>
+    <label for="amount">Ilość: <span class="symbol-required">*</span></label>
+    <input type="text" name="amount" id="amount" placeholder="2-60 znaków"
+    value="<%= orderDetails.amount%>" <%= (formMode == 'showDetails') ?
+    'disabled' : '' %>/>
+    <span id="errorIloscZamowien" class="error-text"></span>
 
-    <%- include('../../fragments/footer.ejs') %>
+    <label for="comments">Komientarzy: </label>
+    <input type="text" name="comments" id="comments" placeholder="2-60 znaków"
+    value="<%= orderDetails.comments%>" <%= (formMode == 'showDetails') ?
+    'disabled' : '' %>/>
+    <span id="errorKomientarzyZamowien" class="error-text"></span>
+
+
+    <select id="order" name="orders_id" required <%= (formMode == 'showDetails')?'disabled' : ''%>>
+      <% if (formMode !='edit' && formMode != 'showDetails'){ %>
+        <option value="" selected>--- Wybierz zamowienie ---</option>
+      <% } %>
+      <% for (let i=0; i<allOrders.length;i++){ let order = allOrders[i]; %>
+      <option value="<%= order._id %>" label="<%=  order.customerFirstName + ' ' + order.customerLastName%>"
+      <%= (orderDetails._id && order._id.toString() == orderDetails.order._id.toString()) ? 'selected' : ''%>></option>
+      <% } %>
+    </select>
+
+    <select id="products" name="products_id" required <%= (formMode == 'showDetails')?'disabled' : ''%>>
+    <% if (formMode !='edit' && formMode != 'showDetails' ){ %>
+      <option value="" selected>--- Wybierz product ---</option>
+    <% } %>
+    <% for (let i=0; i<allProds.length;i++){ let products = allProds[i]; %>
+      <option value="<%= products._id %>" label="<%= products.productName + ' '  + products.productCode%>"
+        <%= (orderDetails._id && products._id.toString() == orderDetails.products._id.toString()) ? 'selected' : ''%>></option>
+    <% } %>
+  </select>
+
+
+
+    
+
+    <% if(formMode == 'showDetails') { %>
+    <div class="form-buttons">
+      <a
+        href="/orderDetails/edit/<%= orderDetails._id %>"
+        class="list-actions-button-edit"
+        >Edytuj</a
+      >
+    </div>
+
+    <% } %>
+    <div class="form-buttons">
+      <p id="errorsSummary" class="error-text"></p>
+      <% if (formMode != 'showDetails') {%>
+      <input type="submit" value="<%=btnLabel%>" class="form-button-submit" />
+      <a class="form-button-cancel" href="/orderDetails">Anuluj</a>
+      <% } else { %>
+      <a class="form-button-cancel" href="/orderDetails">Powrót</a>
+      <% } %>
+    </div>
+  
+</form>
+ 
+  
+</main>
+
+<%- include('../../fragments/footer.ejs') %>

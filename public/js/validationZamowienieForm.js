@@ -1,20 +1,17 @@
 "use strict";
 
 function validateForm() {
-  const orderDateInput = document.getElementById('dataZamowienia');
-  const firstNameInput = document.getElementById('firstName');
-  const lastNameInput = document.getElementById('lastName');
-  const deliveryAddressInput = document.getElementById('deliveryAdres');
+  const orderDateInput = document.getElementById("orderDate");
+  const firstNameInput = document.getElementById("customerFirstName");
+  const lastNameInput = document.getElementById("customerLastName");
+  const deliveryAddressInput = document.getElementById("deliveryAddress");
 
-  const errorOrderDate = document.getElementById('errorDataZamowienia');
-  const errorFirstName = document.getElementById('errorFirstName');
-  const errorLastName = document.getElementById('errorLastName');
-  const errorDeliveryAddress = document.getElementById('errorDeliveryAdres');
-  const errorsSummary = document.getElementById('errorsSummary');
+  const errorOrderDate = document.getElementById("errorDataZamowienia");
+  const errorFirstName = document.getElementById("errorFirstName");
+  const errorLastName = document.getElementById("errorLastName");
+  const errorDeliveryAddress = document.getElementById("errorDeliveryAdres");
+  const errorsSummary = document.getElementById("errorsSummary");
   let valid = true;
-
-      
-
 
   resetErrors(
     [orderDateInput, firstNameInput, lastNameInput, deliveryAddressInput],
@@ -23,28 +20,26 @@ function validateForm() {
   );
 
   let nowDate = new Date(),
-    month = '' + (nowDate.getMonth() + 1),
-    day = '' + nowDate.getDate(),
+    month = "" + (nowDate.getMonth() + 1),
+    day = "" + nowDate.getDate(),
     year = nowDate.getFullYear();
-  if(month.length < 2)
-    month = '0' + month;
-  if(day.length < 2)
-    day = '0' + day;
-  const nowString = [year,month,day].join('-');  
-
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+  const nowString = [year, month, day].join("-");
 
   if (!checkRequired(orderDateInput.value)) {
     valid = false;
     orderDateInput.classList.add("error-input");
     errorOrderDate.innerText = "Pole jest wymagane";
-  }else if(!checkDate(orderDateInput.value)){
+  } else if (!checkDate(orderDateInput.value)) {
     valid = false;
     orderDateInput.classList.add("error-input");
-    errorOrderDate.innerText = "Pole powinno zawierać datę w formacie yyyy-mm-dd (np. 2000-01-01)";
-  }else if(checkDateIfAfter(orderDateInput.value, nowString)){
+    errorOrderDate.innerText =
+      "Pole powinno zawierać datę w formacie yyyy-mm-dd (np. 2000-01-01)";
+  } else if (checkDateIfAfter(orderDateInput.value, nowString)) {
     valid = false;
     orderDateInput.classList.add("error-input");
-    errorOrderDate.innerText = "Data nie może być z przyszłości "
+    errorOrderDate.innerText = "Data nie może być z przyszłości ";
   }
 
   if (!checkRequired(firstNameInput.value)) {

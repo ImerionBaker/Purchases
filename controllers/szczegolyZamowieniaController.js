@@ -1,20 +1,15 @@
+const ProductsRepository = require("../repository/sequelize/ProductsRepository");
+
+const OrdersRepository = require("../repository/sequelize/OrdersRepository");
+
+const OrderDetailsRepository = require("../repository/sequelize/OrderDetailsRepository");
+
 exports.showOrderDetailsList = (req, res, next) => {
-  res.render("pages/SczegolyZamowienia/list", { navLocation: "orderDetails" });
-};
-
-exports.showAddOrderDetailsList = (req, res, next) => {
-  res.render("pages/SczegolyZamowienia/form", { navLocation: "orderDetails" });
-};
-
-exports.showOrderDetailsDetails = (req, res, next) => {
-  res.render("pages/SczegolyZamowienia/szegolyZamowienia", {
-    navLocation: "orderDetails",
-  });
-};
-
-exports.editOrderDetails = (req, res, next) => {
-  res.render("pages/SczegolyZamowienia/form-edit", {
-    navLocation: "orderDetails",
+  OrderDetailsRepository.getOrderDetails().then((orderdet) => {
+    res.render("pages/SczegolyZamowienia/list", {
+      orderdet: orderdet,
+      navLocation: "orderDetails",
+    });
   });
 };
 
@@ -32,10 +27,98 @@ exports.showAddOrderDetailsForm = (req, res, next) => {
         formMode: "createNew",
         allProds: allProds,
         allOrders: allOrders,
-        pageTitle: "Nowy produkt",
-        btnLabel: "Dodaj produkt",
+        pageTitle: "Nowe szegóły zamowienia",
+        btnLabel: "Dodaj szegóły zamowienia",
         formAction: "/orderDetails/add",
         navLocation: "orderDetails",
       });
     });
+};
+
+exports.showEditOrderDetailsForm = (req, res, next) => {
+  const orderDetailsId = req.params.orderDetailsId;
+  let allProds, allOrderDetails, allOrders;
+  OrdersRepository.getOrders().then((orders) => {
+    allOrders = orders;
+  });
+  ProductsRepository.getProducts().then((prods) => {
+    allProds = prods;
+  });
+  OrderDetailsRepository.getOrderDetailsById(orderDetailsId).then(
+    (orderDetails) => {
+      allOrderDetails = orderDetails;
+      res.render("pages/SczegolyZamowienia/form", {
+        orderDetails: orderDetails,
+        formMode: "edit",
+        allProds: allProds,
+        allOrders: allOrders,
+        allOrderDetails: allOrderDetails,
+        pageTitle: "Edycja szegół zamowienia",
+        btnLabel: "Edytuj szegóły zamowienia",
+        formAction: "/orderDetails/edit",
+        navLocation: "orderDetails",
+      });
+    }
+  );
+};
+
+exports.showOrderDetailsDetails = (req, res, next) => {
+  const orderDetailsId = req.params.orderDetailsId;
+  let allProds, allOrderDetails, allOrders;
+  OrdersRepository.getOrders().then((orders) => {
+    allOrders = orders;
+  });
+  ProductsRepository.getProducts().then((prods) => {
+    allProds = prods;
+  });
+  OrderDetailsRepository.getOrderDetailsById(orderDetailsId).then(
+    (orderDetails) => {
+      allOrderDetails = orderDetails;
+      res.render("pages/SczegolyZamowienia/form", {
+        orderDetails: orderDetails,
+        formMode: "showDetails",
+        allProds: allProds,
+        allOrders: allOrders,
+        allOrderDetails: allOrderDetails,
+        pageTitle: "Szczegóły zamowienia",
+        formAction: "",
+        navLocation: "orderDetails",
+      });
+    }
+  );
+};
+
+exports.showAddOrderDetailsList = (req, res, next) => {
+  res.render("pages/SczegolyZamowienia/form", { navLocation: "orderDetails" });
+};
+
+exports.editOrderDetails = (req, res, next) => {
+  res.render("pages/SczegolyZamowienia/form-edit", {
+    navLocation: "orderDetails",
+  });
+};
+
+exports.addOrderDetails = (req, res, next) => {
+  const newOrderDetailsData = { ...req.body };
+  OrderDetailsRepository.createOrderDetails(newOrderDetailsData).then(
+    (result) => {
+      res.redirect("/orderDetails");
+    }
+  );
+};
+
+exports.updateOrderDetails = (req, res, next) => {
+  const orderDetailsId = req.body._id;
+  const orderdetData = { ...req.body };
+  OrderDetailsRepository.updateOrderDetails(orderDetailsId, orderdetData).then(
+    (result) => {
+      res.redirect("/orderDetails");
+    }
+  );
+};
+exports.deleteOrderDetails = (req, res, next) => {
+  const orderDetailsId = req.params.orderDetailsId;
+  OrderDetailsRepository.deleteOrderDetails(orderDetailsId).then(() => {
+    res.redirect("/orderDetails");
+  });
 };
