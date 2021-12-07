@@ -10,27 +10,76 @@ const OrderDetails = sequelize.define('OrderDetails',{
     },
     cost:{
         type:Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: {
+              msg: "Pole jest wymagane",
+            },
+            len: {
+              args: [1, 9],
+              msg: "Pole powinno zawirać od 1 do 9 znaków",
+            },
+            isNumeric: {
+              msg: "Pole powinno zawierać liczbę",
+            },
+          },
     },
     discount:{
         type:Sequelize.DECIMAL(10,2),
         allowNull:true,
+        validate: {
+          isNumeric: {
+            msg: "Pole powinno zawierać liczbę",
+          },
+          len: {
+            args: [1, 2],
+            msg: "Pole powinno zawirać od 1 do 2 znaków",
+          },
+        },
     },
     amount:{
         type:Sequelize.INTEGER,
         allowNull:false,
+        validate: {
+            notEmpty: {
+              msg: "Pole jest wymagane",
+            },
+            len: {
+              args: [1, 9],
+              msg: "Pole powinno zawirać od 1 do 9 znaków",
+            },
+            isNumeric: {
+              msg: "Pole powinno zawierać liczbę",
+            },
+          },
     },
     comments:{
         type:Sequelize.STRING,
         allowNull:true,
+        validate: {
+          len: {
+            args: [1, 200],
+            msg: "Pole powinno zawirać od 1 do 200 znaków",
+          },
+     }
     },
     orders_id:{
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: "Pole jest wymagane"
+            },
+       }
     },
     products_id:{
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: "Pole jest wymagane"
+            },
+       }
     }
 });
 

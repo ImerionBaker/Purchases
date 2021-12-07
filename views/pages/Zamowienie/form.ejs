@@ -11,39 +11,55 @@
     method="post"
     action="<%=formAction%>"
     novalidate
-    onsubmit="return validateForm();"
   >
+  <!-- onsubmit="return validateForm();"  -->
     <input type="hidden" name="_id" value="<%= orders._id %>" />
 
     <label for="orderDate">Data: <span class="symbol-required">*</span></label>
-    <input type="text" name="orderDate" id="orderDate" placeholder="2-60 znaków"
-    value="<%=orders.orderDate%>" <%= (formMode == 'showDetails') ? 'disabled' :
+    <input type="text" name="orderDate" id="orderDate" placeholder="np. 1970-12-31"
+    value="<%= (formMode=='createNew') ? '': orders.orderDate.toISOString().split('T')[0] %>" class="<%= validationErrors.find(e => e.path.includes('orderDate')) ? 'error-input' : ''%>" <%= (formMode == 'showDetails') ? 'disabled' :
     '' %>/>
-    <span id="errorDataZamowienia" class="error-text"></span>
+    <span id="errorDataZamowienia" class="error-text">
+      <% if(validationErrors.find(e => e.path.includes('orderDate'))) {%>
+        <%=validationErrors.find(e => e.path.includes('orderDate')).message%> 
+     <% } %>
+    </span>
 
     <label for="customerFirstName"
       >Imie: <span class="symbol-required">*</span></label
     >
     <input type="text" name="customerFirstName" id="customerFirstName"
-    placeholder="2-200 znaków" value="<%= orders.customerFirstName %>" <%=
+    placeholder="2-60 znaków" value="<%= orders.customerFirstName %>" class="<%= validationErrors.find(e => e.path.includes('customerFirstName')) ? 'error-input' : ''%>" <%=
     (formMode == 'showDetails') ? 'disabled' : '' %> />
-    <span id="errorFirstName" class="error-text"></span>
+    <span id="errorFirstName" class="error-text">
+      <% if(validationErrors.find(e => e.path.includes('customerFirstName'))) {%>
+        <%=validationErrors.find(e => e.path.includes('customerFirstName')).message%> 
+     <% } %>
+    </span>
 
     <label for="customerLastName"
       >Nazwisko: <span class="symbol-required">*</span></label
     >
     <input type="text" name="customerLastName" id="customerLastName"
-    placeholder="2-200 znaków" value="<%= orders.customerLastName %>" <%=
+    placeholder="2-60 znaków" value="<%= orders.customerLastName %>" class="<%= validationErrors.find(e => e.path.includes('customerLastName')) ? 'error-input' : ''%>" <%=
     (formMode == 'showDetails') ? 'disabled' : '' %> />
-    <span id="errorLastName" class="error-text"></span>
+    <span id="errorLastName" class="error-text">
+      <% if(validationErrors.find(e => e.path.includes('customerLastName'))) {%>
+        <%=validationErrors.find(e => e.path.includes('customerLastName')).message%> 
+     <% } %>
+    </span>
 
     <label for="deliveryAddress"
       >Adres dostawy: <span class="symbol-required">*</span></label
     >
     <input type="deliveryAddress" name="deliveryAddress" id="deliveryAddress"
-    placeholder="2-200 znaków" value="<%= orders.deliveryAddress %>" <%=
+    placeholder=" 10-200 znaków" value="<%= orders.deliveryAddress %>" class="<%= validationErrors.find(e => e.path.includes('deliveryAddress')) ? 'error-input' : ''%>" <%=
     (formMode == 'showDetails') ? 'disabled' : '' %> />
-    <span id="errorDeliveryAdres" class="error-text"></span>
+    <span id="errorDeliveryAdres" class="error-text">
+      <% if(validationErrors.find(e => e.path.includes('deliveryAddress'))) {%>
+        <%=validationErrors.find(e => e.path.includes('deliveryAddress')).message%> 
+     <% } %>
+    </span>
 
     <% if(formMode == 'showDetails') { %>
     <div class="form-buttons">

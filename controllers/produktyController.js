@@ -33,6 +33,7 @@ exports.showAddProductsForm = (req, res, next) => {
     btnLabel: "Dodaj produkt",
     formAction: "/products/add",
     navLocation: "products",
+    validationErrors: [],
   });
 };
 
@@ -46,6 +47,7 @@ exports.showEditProductsForm = (req, res, next) => {
       btnLabel: "Edytuj produkt",
       formAction: "/products/edit",
       navLocation: "products",
+      validationErrors: [],
     });
   });
 };
@@ -59,44 +61,52 @@ exports.showProductsDetails = (req, res, next) => {
       pageTitle: "Szczegóły produktu",
       formAction: "",
       navLocation: "products",
+      validationErrors: [],
     });
   });
 };
 
-exports.showAddOrderDetailsForm = (req, res, next) => {
-  let allProds, allOrders;
-  ProductsRepository.getProducts()
-    .then((prods) => {
-      allProds = prods;
-      return OrdersRepository.getOrders();
-    })
-    .then((orders) => {
-      allOrders = orders;
-      res.render("pages/SczegolyZamowienia/form", {
-        orderDetails: {},
-        formMode: "createNew",
-        allProds: allProds,
-        allOrders: allOrders,
-        pageTitle: "Nowy produkt",
-        btnLabel: "Dodaj produkt",
-        formAction: "/orderDetails/add",
-        navLocation: "orderDetails",
-      });
-    });
-};
+
 
 exports.addProduct = (req, res, next) => {
   const newProdData = { ...req.body };
-  ProductsRepository.createProduct(newProdData).then((result) => {
-    res.redirect("/products");
-  });
+  ProductsRepository.createProduct(newProdData)
+    .then((result) => {
+      res.redirect("/products");
+    })
+    .catch((err) => {
+      res.render("pages/Produkty/form", {
+        products: newProdData,
+        pageTitle: "Nowy produkt",
+        formMode: "createNew",
+        btnLabel: "Dodaj produkt",
+        formAction: "/products/add",
+        navLocation: "products",
+        validationErrors: err.errors,
+      });
+    });
 };
 exports.updateProduct = (req, res, next) => {
   const prodId = req.body._id;
   const prodData = { ...req.body };
+  let error;
   ProductsRepository.updateProduct(prodId, prodData).then((result) => {
     res.redirect("/products");
-  });
+  }).catch(err=>{
+    error = err;
+    return ProductsRepository.getProductById(prodId)
+  })
+  .then((products) =>{
+    res.render("pages/Produkty/form", {
+      products: products,
+      formMode: "edit",
+      pageTitle: "Edycja produktu",
+      btnLabel: "Edytuj produkt",
+      formAction: "/products/edit",
+      navLocation: "products",
+      validationErrors: error.errors,
+    });
+  })
 };
 exports.deleteProduct = (req, res, next) => {
   const prodId = req.params.prodId;

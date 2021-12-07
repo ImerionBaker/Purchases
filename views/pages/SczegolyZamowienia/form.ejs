@@ -12,36 +12,48 @@
     method="post"
     action="<%=formAction%>"
     novalidate
-    onsubmit="return validateForm();"
   >
+  <!-- onsubmit="return validateForm();"  -->
     <input type="hidden" name="_id" value="<%= orderDetails._id %>" />
 
     <label for="cost">Cena: <span class="symbol-required">*</span></label>
-    <input type="text" name="cost" id="cost" placeholder="2-60 znaków"
-    value="<%= orderDetails.cost%>" <%= (formMode == 'showDetails') ? 'disabled'
+    <input type="text" name="cost" id="cost" placeholder="1-9 znaków"
+    value="<%= orderDetails.cost%>" class="<%= validationErrors.find(e => e.path.includes('cost')) ? 'error-input' : ''%> " <%= (formMode == 'showDetails') ? 'disabled'
     : '' %>/>
-    <span id="errorCenaZamowienia" class="error-text"></span>
+    <span id="errorCenaZamowienia" class="error-text">
+      <% if(validationErrors.find(e => e.path.includes('cost'))) {%>
+        <%=validationErrors.find(e => e.path.includes('cost')).message%> 
+     <% } %>
+    </span>
 
     <label for="discount">Zniżka: </label>
-    <input type="text" name="discount" id="discount" placeholder="2-60 znaków"
-    value="<%= orderDetails.discount%>" <%= (formMode == 'showDetails') ?
+    <input type="text" name="discount" id="discount" placeholder="1-2 znaka"
+    value="<%= orderDetails.discount%>" class="<%= validationErrors.find(e => e.path.includes('discount')) ? 'error-input' : ''%>" <%= (formMode == 'showDetails') ?
     'disabled' : '' %>/>
-    <span id="errorZnizkaNaZamowienie" class="error-text"></span>
+    <span id="errorZnizkaNaZamowienie" class="error-text">
+      <% if(validationErrors.find(e => e.path.includes('discount'))) {%>
+        <%=validationErrors.find(e => e.path.includes('discount')).message%> 
+     <% } %>
+    </span>
 
     <label for="amount">Ilość: <span class="symbol-required">*</span></label>
-    <input type="text" name="amount" id="amount" placeholder="2-60 znaków"
-    value="<%= orderDetails.amount%>" <%= (formMode == 'showDetails') ?
+    <input type="text" name="amount" id="amount" placeholder="1-9 znaków"
+    value="<%= orderDetails.amount%>" class="<%= validationErrors.find(e => e.path.includes('amount')) ? 'error-input' : ''%>" <%= (formMode == 'showDetails') ?
     'disabled' : '' %>/>
-    <span id="errorIloscZamowien" class="error-text"></span>
+    <span id="errorIloscZamowien" class="error-text">
+        <% if(validationErrors.find(e => e.path.includes('amount'))) {%>
+           <%=validationErrors.find(e => e.path.includes('amount')).message%> 
+        <% } %>
+    </span>
 
     <label for="comments">Komientarzy: </label>
-    <input type="text" name="comments" id="comments" placeholder="2-60 znaków"
-    value="<%= orderDetails.comments%>" <%= (formMode == 'showDetails') ?
+    <input type="text" name="comments" id="comments" placeholder="2-200 znaków"
+    value="<%= orderDetails.comments%>"  <%= (formMode == 'showDetails') ?
     'disabled' : '' %>/>
     <span id="errorKomientarzyZamowien" class="error-text"></span>
 
-
-    <select id="order" name="orders_id" required <%= (formMode == 'showDetails')?'disabled' : ''%>>
+    <label for="order">Zamowienie: <span class="symbol-required">*</span></label>
+    <select id="order" name="orders_id" required class="<%= validationErrors.find(e => e.path.includes('orders_id')) ? 'error-input' : ''%>"  <%= (formMode == 'showDetails')?'disabled' : ''%>>
       <% if (formMode !='edit' && formMode != 'showDetails'){ %>
         <option value="" selected>--- Wybierz zamowienie ---</option>
       <% } %>
@@ -50,8 +62,14 @@
       <%= (orderDetails._id && order._id.toString() == orderDetails.order._id.toString()) ? 'selected' : ''%>></option>
       <% } %>
     </select>
+    <span id="errorZamowienie" class="error-text">
+      <% if(validationErrors.find(e => e.path.includes('orders_id'))) {%>
+        <%=validationErrors.find(e => e.path.includes('orders_id')).message%> 
+     <% } %>
+    </span>
 
-    <select id="products" name="products_id" required <%= (formMode == 'showDetails')?'disabled' : ''%>>
+    <label for="products">Produkt: <span class="symbol-required">*</span></label>
+    <select id="products" name="products_id" required class="<%= validationErrors.find(e => e.path.includes('products_id')) ? 'error-input' : ''%>" <%= (formMode == 'showDetails')?'disabled' : ''%>>
     <% if (formMode !='edit' && formMode != 'showDetails' ){ %>
       <option value="" selected>--- Wybierz product ---</option>
     <% } %>
@@ -60,6 +78,11 @@
         <%= (orderDetails._id && products._id.toString() == orderDetails.products._id.toString()) ? 'selected' : ''%>></option>
     <% } %>
   </select>
+  <span id="errorProduct" class="error-text">
+    <% if(validationErrors.find(e => e.path.includes('products_id'))) {%>
+      <%=validationErrors.find(e => e.path.includes('products_id')).message%> 
+   <% } %>
+  </span>
 
 
 

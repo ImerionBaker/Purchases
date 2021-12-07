@@ -33,6 +33,7 @@ exports.showAddOrderForm = (req, res, next) => {
     btnLabel: "Dodaj zamowienie",
     formAction: "/order/add",
     navLocation: "order",
+    validationErrors: [],
   });
 };
 
@@ -46,6 +47,7 @@ exports.showEditOrderForm = (req, res, next) => {
       btnLabel: "Edytuj zamowienie",
       formAction: "/order/edit",
       navLocation: "order",
+      validationErrors: [],
     });
   });
 };
@@ -59,6 +61,7 @@ exports.showOrderDetails = (req, res, next) => {
       pageTitle: "Szczegóły zamownienia",
       formAction: "",
       navLocation: "order",
+      validationErrors: [],
     });
   });
 };
@@ -67,14 +70,40 @@ exports.addOrder = (req, res, next) => {
   const newOrderData = { ...req.body };
   OrdersRepository.createOrder(newOrderData).then((result) => {
     res.redirect("/order");
-  });
+  })
+  .catch((err)=>{
+    res.render("pages/Zamowienie/form", {
+      orders: newOrderData,
+      pageTitle: "Nowe zamowienie",
+      formMode: "createNew",
+      btnLabel: "Dodaj zamowienie",
+      formAction: "/order/add",
+      navLocation: "order",
+      validationErrors: err.errors,
+    });
+  })
 };
 exports.updateOrder = (req, res, next) => {
   const orderId = req.body._id;
   const orderData = { ...req.body };
+  let error;
   OrdersRepository.updateOrder(orderId, orderData).then((result) => {
     res.redirect("/order");
-  });
+  }).catch(err=>{
+    error = err;
+    return OrdersRepository.getOrderById(orderId)
+  })
+  .then((orders) =>{
+    res.render("pages/Zamowienie/form", {
+      orders: orders,
+      formMode: "edit",
+      pageTitle: "Edycja zamowienia",
+      btnLabel: "Edytuj zamowienie",
+      formAction: "/order/edit",
+      navLocation: "order",
+      validationErrors: error.errors,
+    });
+  })
 };
 exports.deleteOrder = (req, res, next) => {
   const orderId = req.params.orderId;

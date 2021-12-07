@@ -17,31 +17,33 @@
     method="post"
     action="<%=formAction%>"
     novalidate
-    onsubmit="return validateForm();"
   >
+  <!-- onsubmit="return validateForm();"  -->
     <input type="hidden" name="_id" value="<%= products._id %>" />
-
-    <label for="productName"
-      >Nazwa: <span class="symbol-required">*</span></label
-    >
-    <input type="text" name="productName" id="productName" placeholder="2-60
-    znaków" value="<%= products.productName %>" <%= (formMode == 'showDetails')
+    <label for="productName">Nazwa: <span class="symbol-required">*</span></label>
+    <input type="text" name="productName" id="productName"   placeholder="2-60 znaków" value="<%= products.productName %>" class="<%= validationErrors.find(e => e.path.includes('productName')) ? 'error-input' : ''%>" <%= (formMode == 'showDetails')
     ? 'disabled' : '' %>/>
-    <span id="errorNazwaProduktu" class="error-text"></span>
+    <span id="errorNazwaProduktu" class="error-text">
+      <% if(validationErrors.find(e => e.path.includes('productName'))) {%>
+         <%=validationErrors.find(e => e.path.includes('productName')).message%> 
+      <% } %>
+    </span>
 
     <label for="description">Opis: </label>
-    <input type="text" name="description" id="description" placeholder="2-200
-    znaków" value="<%= products.description %>" <%= (formMode == 'showDetails')
+    <input type="text" name="description" id="description" placeholder="2-200 znaków" value="<%= products.description %>" <%= (formMode == 'showDetails')
     ? 'disabled' : '' %> />
     <span id="errorOpisProduktu" class="error-text"></span>
 
     <label for="productCode"
       >Kod towaru: <span class="symbol-required">*</span></label
     >
-    <input type="text" name="productCode" id="productCode" placeholder="2-10
-    znaków" value="<%= products.productCode %>" <%= (formMode == 'showDetails')
+    <input type="text" name="productCode" id="productCode" placeholder="4-9 znaków" value="<%= products.productCode %>" class="<%= validationErrors.find(e => e.path.includes('productCode')) ? 'error-input' : ''%>"  <%= (formMode == 'showDetails')
     ? 'disabled' : '' %> />
-    <span id="errorKodProduktu" class="error-text"> </span>
+    <span id="errorKodProduktu" class="error-text"> 
+      <% if(validationErrors.find(e => e.path.includes('productCode'))) {%>
+        <%=validationErrors.find(e => e.path.includes('productCode')).message%> 
+     <% } %>
+    </span>
 
     <% if(formMode == 'showDetails') { %>
     <div class="form-buttons">
@@ -56,8 +58,10 @@
     <div class="form-buttons">
       <p id="errorsSummary" class="error-text"></p>
       <% if (formMode != 'showDetails') {%>
-      <!-- <input class="form-button-submit" type="submit" value="<%=btnLabel%>" /> -->
       <input type="submit" value="<%=btnLabel%>" class="form-button-submit" />
+      <a class="form-button-cancel" href="/products">Anuluj</a>
+      <% } else { %>
+      <a class="form-button-cancel" href="/products">Powrót</a>
       <% } %>
     </div>
   </form>
@@ -84,15 +88,6 @@
       <% } %>
     </tbody>
   </table>
-  <br />
-  <div class="form-buttons">
-    <% if (formMode != 'showDetails') { %>
-    <!-- <input class="form-button-submit" type="submit" value="<%=btnLabel%>" /> -->
-    <a class="form-button-cancel" href="/products">Anuluj</a>
-    <% } else { %>
-    <a class="form-button-cancel" href="/products">Powrót</a>
-    <% } %>
-  </div>
   <% } %>
 
   <!-- <form class="form" novalidate onsubmit="return validateForm();">
